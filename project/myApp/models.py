@@ -6,10 +6,9 @@ class customUser(AbstractUser):
     USER = [
         ('jobseeker','JobSeeker'),('recruiter','Recruiter')
     ]
-
-    Display_name = models.CharField(max_length = 50)
+    Display_name = models.CharField(max_length = 50,null=True)
     email = models.EmailField(unique = True)
     password = models.CharField(max_length = 50)
-    confirm_password = models.CharField(max_length = 50)
+    confirm_password = models.CharField(max_length = 50,null=True)
     user_type = models.CharField(choices = USER,max_length = 50)
 
