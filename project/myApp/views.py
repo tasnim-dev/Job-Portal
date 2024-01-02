@@ -1,6 +1,8 @@
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth import authenticate,login,logout
 from .models import *
+from django.contrib.auth.decorators import login_required
+
 #Signup Pagefrom django.shortcuts import render
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
@@ -12,6 +14,14 @@ from django.contrib import messages
 
 # Create your views here.
 
+#logout Page
+def logoutPage(request):
+    logout(request)
+    return redirect('loginPage')
+
+
+
+#login Page 
 def loginPage(request):
 
     if request.method == 'POST':
@@ -22,7 +32,7 @@ def loginPage(request):
         print(user)
         if user:
             login(request,user)
-            return HttpResponse("Login Successfully")
+            return redirect("dashboardPage")
 
     return render (request, 'login.html')
 
@@ -39,7 +49,7 @@ def signupPage(request):
         except IntegrityError:
             # Handle the case where the username already exists
             # You can redirect the user to a different page or display an error message
-            
+
             messages.warning(request,'Username already exists. Please choose a different username')
             return render(request, 'signup.html')
 
@@ -54,19 +64,39 @@ def signupPage(request):
 
 
 #Dashboard Page
+@login_required
 def dashboardPage(request):
+
+    return render(request, "dashboard.html")
+
+#view job Page
+def viewjobPage(request):
+    
+    return render (request, 'viewjob.html')
+
+#Add job Page
+def addjobPage(request):
+
     user = request.user
 
-    if user.is_authenticated:
-        if user.user_type == 'recruiter':
-            Template_name = 'recruiter/dashboard.html'
-        
-        elif user.user_type == 'jobseeker' :
-            Template_name = 'jobseeker/dashboard.html'
+    if request.method == "POST":
+        job_Title = request.POST.get('jobTitle')
+        com_name = request.POST.get('companyName')
+        location = request.POST.get('location')
+        description = request.POST.get('description')
+        job_Title = request.POST.get('jobTitle')
 
-        else:
-            return HttpResponse ('invalid user')
+        job = jobModel(
+            job_title = job_Title,
+            company_name = com_name,
+            location = location,
+            description = description,
+            job_creator = user,
+        )
 
-    else:
-        return HttpResponse('User is not authenticate')
-    return render(request, Template_name)
+        job.save()
+
+        return redirect("viewjobPage")
+
+
+    return render (request, 'recruiter/addjob.html')

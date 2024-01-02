@@ -12,3 +12,13 @@ class customUser(AbstractUser):
     confirm_password = models.CharField(max_length = 50,null=True)
     user_type = models.CharField(choices = USER,max_length = 50)
 
+class jobModel(models.Model):
+    job_title=models.CharField(max_length=100, null=True)
+    company_name=models.CharField(max_length=100, null=True)
+    location=models.CharField(max_length=100, null=True)
+    description=models.TextField()
+    create_at=models.DateTimeField(auto_now_add=True)
+    job_creator=models.ForeignKey(customUser, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.job_title
