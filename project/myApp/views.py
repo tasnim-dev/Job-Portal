@@ -28,8 +28,7 @@ def loginPage(request):
         user_name = request.POST.get('username')
         user_pass = request.POST.get('password')
         user = authenticate(request,username=user_name, password=user_pass)
-        
-        print(user)
+    
         if user:
             login(request,user)
             return redirect("dashboardPage")
@@ -71,8 +70,15 @@ def dashboardPage(request):
 
 #view job Page
 def viewjobPage(request):
+
+    #for showing the database data in frontend
+    job = jobModel.objects.all()
+
+    context = {
+        'job':job
+    }
     
-    return render (request, 'viewjob.html')
+    return render (request, 'viewjob.html',context)
 
 #Add job Page
 def addjobPage(request):
@@ -100,3 +106,60 @@ def addjobPage(request):
 
 
     return render (request, 'recruiter/addjob.html')
+
+#Delete job
+def deletePage(request,myid):
+
+    job = jobModel.objects.filter(id=myid)
+    job.delete()
+
+    return redirect ("viewjobPage")
+
+
+#edit job
+def editPage(request,myid):
+
+    job = jobModel.objects.filter(id=myid)
+    
+
+    return render (request, "recruiter/editjob.html", {'job':job})
+
+#Update job Page
+def updatePage(request):
+
+    user = request.user
+
+    if request.method == "POST":
+        job_id = request.POST.get('jobid')
+        job_Title = request.POST.get('jobTitle')
+        com_name = request.POST.get('companyName')
+        location = request.POST.get('location')
+        description = request.POST.get('description')
+        job_Title = request.POST.get('jobTitle')
+
+        job = jobModel(
+            
+            id = job_id,
+            job_title = job_Title,
+            company_name = com_name,
+            location = location,
+            description = description,
+            job_creator = user,
+        )
+
+        job.save()
+
+        return redirect("viewjobPage")
+    
+
+#Apply job
+def applyPage(request,myid):
+
+    job = jobModel.objects.filter(id=myid)
+
+    return render (request,"jobseeker/applyjob.html")
+
+#User Profile Page
+def profilePage(request):
+
+    return render (request,"profile.html")

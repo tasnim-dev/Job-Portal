@@ -10,5 +10,11 @@ urlpatterns = [
     path("dashboardPage",views.dashboardPage, name='dashboardPage'),
     path("viewjobPage", views.viewjobPage, name='viewjobPage'),
     path("addjobPage", views.addjobPage, name='addjobPage'),
+    path("deletePage/<str:myid>", views.deletePage, name='deletePage'),
+    path("editPage/<str:myid>", views.editPage, name='editPage'),
+    path("updatePage", views.updatePage, name='updatePage'),
+    path("applyPage/<str:myid>", views.applyPage, name='applyPage'),
+    path("profilePage", views.profilePage, name='profilePage'),
+
     
 ]

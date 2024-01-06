@@ -17,8 +17,24 @@ class jobModel(models.Model):
     company_name=models.CharField(max_length=100, null=True)
     location=models.CharField(max_length=100, null=True)
     description=models.TextField()
-    create_at=models.DateTimeField(auto_now_add=True)
+    create_at=models.DateTimeField(auto_now_add=True, null=True)
     job_creator=models.ForeignKey(customUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.job_title
+    
+#Recruiter Profile
+class RecruiterProfile(models.Model):
+    user = models.OneToOneField(customUser, on_delete=models.CASCADE)
+    profile_picture=models.ImageField(upload_to="media/profile_pic", null=True)
+
+    def __str__(self):
+        return self.user.Display_name
+
+#JobSeeker Profile   
+class JobSeekerProfile(models.Model):
+    user = models.OneToOneField(customUser, on_delete=models.CASCADE)
+    profile_picture=models.ImageField(upload_to="media/profile_pic", null=True)
+
+    def __str__(self):
+        return self.user.Display_name

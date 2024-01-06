@@ -1,0 +1,70 @@
+{% extends "dashboard.html" %}
+
+{% block profile %}
+
+  <style>
+   
+
+    .card-container {
+      text-align: center;
+    }
+
+    .card {
+      width: 500px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      display: block;
+      margin: 0 auto 15px;
+      
+    }
+
+    .card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 15px;
+    
+      
+    }
+
+    .card-title {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .attribute {
+      margin-bottom: 10px;
+    }
+
+    .attribute span {
+      font-weight: bold;
+    }
+    .edit-button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+  </style>
+
+
+  <div class="card-container">
+    <div class="card">
+      <img src="https://static.vecteezy.com/system/resources/thumbnails/024/684/356/small/illustration-of-eagle-head-logo-with-ai-generative-free-png.png" alt="Profile Picture">
+      <div class="card-title">User Information</div>
+      <div class="attribute"><span>User Type:</span> {{request.user.user_type}}</div>
+      <div class="attribute"><span>User Name:</span> {{request.user.Display_name}}</div>
+      <div class="attribute"><span>Skills:</span> HTML, CSS, JavaScript, Python</div>
+      <button class="edit-button">Edit Profile</button>
+    </div>
+  </div>
+
+
+
+{% endblock profile %}

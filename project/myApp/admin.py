@@ -6,3 +6,5 @@ class customUser_view(admin.ModelAdmin):
 
 admin.site.register(customUser,customUser_view)
 admin.site.register(jobModel)
+admin.site.register(RecruiterProfile)
+admin.site.register(JobSeekerProfile)

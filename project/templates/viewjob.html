@@ -19,35 +19,25 @@
 <section class="job-listings"> 
     <h2>Latest Job Listings</h2> 
     <ul> 
+        {% for i in job  %}
         <li> 
-            <h3>Web Developer</h3> 
-            <p>Company: ABC Tech</p> 
-            <p>Location: India</p> 
-            <p>Description: Good Web Developer</p> 
+            <h3>{{i.job_title}}</h3> 
+            <p>Company: {{i.company_name}}</p> 
+            <p>Location: {{i.location}}</p> 
+            <p>Description: {{i.description}}</p> 
+            <p>Create Time: {{i.create_at}}</p> 
+            <p>Creator By: {{i.job_creator}}</p> 
+
             {% if user.user_type == 'jobseeker' %}
-                <a href="#">Apply Now</a> 
+                <a href="{% url "applyPage" i.id %}">Apply Now</a> 
             {% endif %}
 
             {% if user.user_type == 'recruiter' %}
-                <a href="#">Edit</a> 
-                <a href="#">Delete</a> 
+                <a href="{% url "editPage" i.id %}">Edit</a> 
+                <a href="{% url "deletePage" i.id %}">Delete</a> 
             {% endif %}
         </li> 
-        <li> 
-            <h3>Graphic Designer</h3> 
-            <p>Company: XYZ Design</p> 
-            <p>Location: India </p> 
-            <p>Description:Good Graphic Designer</p> 
-
-            {% if user.user_type == 'jobseeker' %}
-                <a href="#">Apply Now</a> 
-            {% endif %}
-
-            {% if user.user_type == 'recruiter' %}
-                <a href="#">Edit</a> 
-                <a href="#">Delete</a> 
-            {% endif %}
-        </li> 
+        {% endfor %}
     </ul> 
 </section> {% endblock section %}
 
