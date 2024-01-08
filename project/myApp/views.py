@@ -7,10 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.contrib import messages
-
-    # Handle the case where the username already exists
-    # You can redirect the user to a different page or display an error message
-
+from django.contrib.auth.hashers import check_password
 
 # Create your views here.
 
@@ -163,3 +160,36 @@ def applyPage(request,myid):
 def profilePage(request):
 
     return render (request,"profile.html")
+
+#Edit User Profile Page
+def editprofilePage(request):
+
+    user = request.user
+
+    if request.method == 'POST':
+
+        userid = request.POST.get('user_id')
+        username = request.POST.get('username')
+        displayName = request.POST.get('displayName')
+        email = request.POST.get('email')
+        img = request.FILES.get('profilePic')
+        mypass = request.POST.get('c_password')
+
+        if not check_password(mypass, user.password):
+            messages.error(request,"Wrong password given, profile is faild to update")
+            return redirect("editprofilePage")
+        
+        user.id=userid
+        user.username=username
+        user.Display_name=displayName
+        user.email=email
+        
+        if img:
+            user.profile_picture=img
+
+        user.save()
+        messages.success(request,"Profile is successfully updated")
+        return redirect("profilePage")
+
+
+    return render (request,"editProfile.html")

@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 from myApp import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -15,6 +17,7 @@ urlpatterns = [
     path("updatePage", views.updatePage, name='updatePage'),
     path("applyPage/<str:myid>", views.applyPage, name='applyPage'),
     path("profilePage", views.profilePage, name='profilePage'),
+    path("editprofilePage", views.editprofilePage, name='editprofilePage'),
 
     
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

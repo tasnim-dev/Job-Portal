@@ -12,6 +12,7 @@ class customUser(AbstractUser):
     confirm_password = models.CharField(max_length = 50,null=True)
     user_type = models.CharField(choices = USER,max_length = 50)
 
+
 class jobModel(models.Model):
     job_title=models.CharField(max_length=100, null=True)
     company_name=models.CharField(max_length=100, null=True)
@@ -25,7 +26,7 @@ class jobModel(models.Model):
     
 #Recruiter Profile
 class RecruiterProfile(models.Model):
-    user = models.OneToOneField(customUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(customUser, on_delete=models.CASCADE, related_name='recruiterProfile')
     profile_picture=models.ImageField(upload_to="media/profile_pic", null=True)
 
     def __str__(self):
@@ -33,7 +34,7 @@ class RecruiterProfile(models.Model):
 
 #JobSeeker Profile   
 class JobSeekerProfile(models.Model):
-    user = models.OneToOneField(customUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(customUser, on_delete=models.CASCADE, related_name='jobseekerProfile')
     profile_picture=models.ImageField(upload_to="media/profile_pic", null=True)
 
     def __str__(self):

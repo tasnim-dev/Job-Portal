@@ -56,12 +56,36 @@
 
   <div class="card-container">
     <div class="card">
-      <img src="https://static.vecteezy.com/system/resources/thumbnails/024/684/356/small/illustration-of-eagle-head-logo-with-ai-generative-free-png.png" alt="Profile Picture">
+      {% if user.user_type == "recruiter" %}
+
+      <img src="{{request.user.recruiterProfile.profile_picture.url}}" alt="Profile Picture">
+
+      {% elif user.user_type == "jobseeker" %}
+
+      <img src="{{request.user.jobseekerProfile.profile_picture.url}}" alt="Profile Picture">
+      
+      {% endif %}
+
+
+      {% if messages %}
+        
+      {% for message in messages  %}
+
+      {% if message.tags == 'success' %}
+      <p>{{message}}</p>
+      
+      {% endif %}
+      
+      {% endfor %}
+      
+      {% endif %}
+
+
       <div class="card-title">User Information</div>
       <div class="attribute"><span>User Type:</span> {{request.user.user_type}}</div>
       <div class="attribute"><span>User Name:</span> {{request.user.Display_name}}</div>
       <div class="attribute"><span>Skills:</span> HTML, CSS, JavaScript, Python</div>
-      <button class="edit-button">Edit Profile</button>
+      <a href="{% url "editprofilePage" %}"><button class="edit-button">Edit Profile</button></a>
     </div>
   </div>
 
