@@ -10,8 +10,8 @@
     }
 
     .card {
-      width: 500px;
-      background-color: #fff;
+      width: 800px;
+      background-color: rgba(128, 0, 128, 0.1); /* Purple transparent background */
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       padding: 20px;
@@ -44,7 +44,7 @@
       font-weight: bold;
     }
     .edit-button {
-        background-color: #4CAF50;
+        background-color: #6f42c1;
         color: white;
         padding: 10px;
         border: none;
@@ -86,6 +86,7 @@
       <div class="attribute"><span>User Name:</span> {{request.user.Display_name}}</div>
       <div class="attribute"><span>Skills:</span> HTML, CSS, JavaScript, Python</div>
       <a href="{% url "editprofilePage" %}"><button class="edit-button">Edit Profile</button></a>
+      <a href="{% url "changepasswordPage" %}"><button class="edit-button">Change Password</button></a>
     </div>
   </div>
 

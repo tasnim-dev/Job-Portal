@@ -24,6 +24,20 @@
                 <h2 class="text-center mb-4">Login</h2>
                 <form method="POST" action="{% url 'loginPage' %}">
                     {% csrf_token %}
+
+                    {% if messages %}
+                        
+                    {% for message in messages  %}
+
+                    {% if message.tags == 'success' %}
+                    <p>{{message}}</p>
+                    
+                    {% endif %}
+                    
+                    {% endfor %}
+
+                    {% endif %}
+
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" class="form-control" id="username" name="username" required>

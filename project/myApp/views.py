@@ -163,11 +163,9 @@ def profilePage(request):
 
 #Edit User Profile Page
 def editprofilePage(request):
-
     user = request.user
 
     if request.method == 'POST':
-
         userid = request.POST.get('user_id')
         username = request.POST.get('username')
         displayName = request.POST.get('displayName')
@@ -191,5 +189,32 @@ def editprofilePage(request):
         messages.success(request,"Profile is successfully updated")
         return redirect("profilePage")
 
-
     return render (request,"editProfile.html")
+
+
+#Change password Page
+def changepasswordPage(request):
+
+    user = request.user
+
+    if request.method == 'POST':
+
+        old_password=request.POST.get('currentPassword')
+        newPassword=request.POST.get('newPassword')
+        confirmPassword=request.POST.get('confirmPassword')
+
+        if not check_password(old_password,user.password):
+            messages.error(request,"Wrong password given")
+            return redirect("changepasswordPage")
+        
+        if newPassword!=confirmPassword:
+            messages.error(request,"New password and Confirm password is not matched")
+            return redirect("changepasswordPage")
+        
+        else:
+            user.set_password(confirmPassword)
+            user.save()
+            messages.success(request,"Password is successfully Changed")
+            return redirect("loginPage")
+
+    return render(request, "changepassword.html")

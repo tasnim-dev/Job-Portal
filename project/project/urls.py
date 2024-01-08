@@ -18,6 +18,7 @@ urlpatterns = [
     path("applyPage/<str:myid>", views.applyPage, name='applyPage'),
     path("profilePage", views.profilePage, name='profilePage'),
     path("editprofilePage", views.editprofilePage, name='editprofilePage'),
+    path("changepasswordPage", views.changepasswordPage, name='changepasswordPage'),
 
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
